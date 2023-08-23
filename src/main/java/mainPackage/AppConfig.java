@@ -19,7 +19,7 @@ public class AppConfig
 	   public static String toEmail = "gopi.v@beetlerim.com";
 	   public static String CCEmail = "gopi.v@beetlerim.com";
 	   
-	   public static String mailSubject = "Base Rent Update for  ";
+	   public static String mailSubject = "Surety Bond Report on  ";
 	   
 	   public static String[] LeaseAgreementFileNames = {"REVISED_Lease_","Lease_","Leases_"};
 	   
@@ -30,11 +30,13 @@ public class AppConfig
 	   public static String pendingLeasesQuery = "Select ID, AddressState,BuildingName,RenterFirstName,RenterLastName,PolicyNumberAggregated\r\n"
 	   		+ ",RenterFullName = (RenterFirstName +' '+ RenterLastName),PolicyStatus,CoverageAmount,CoverageEndDate\r\n"
 	   		+ ",SubmittedTimeStamp,TotalSubmittedAmount,TotalPayoutAmount,ClaimPaidAt='',ClaimDueDate,ClaimNumberAggregated,ClaimStatus\r\n"
-	   		+ "from Automation.SuretyBond where Automation_Status ='Failed' and Automation_Notes like '%Building not found%'";
+	   		+ "from Automation.SuretyBond where Automation_Status ='Pending' ";
 	   
 	   public static String failedLeasesQuery = "Select Company, LeaseEntityID,DateDiff(Day,MoveInDate,Getdate()) as datedifference from Automation.BaseRentUpdate where  Company='Alabama' and Status ='Failed'";
 	   
 	   public static String getLeasesWithStatusforCurrentDay = "Select Company, Building,ThirdPartyUnitID, Leaseidnumber, LeaseName,LeaseStatus,leaseExecutionDate, StartDate, EndDate, MonthlyRent, MonthlyRentFromPW, PetRent, PetRentFromPW,Status, Notes from Automation.InitialRentsUpdate and company in ('Tennessee') ";//where Format(convert(datetime, CompletedDate, 101),'dd MM yyyy') = format(getdate(),'dd MM yyyy') ";//and company in ('Florida','North Carolina')";
+	   
+	   public static String[] buildingNameLastWords = {"Court","Lane","Road","Drive","Avenue","Terrace","Northwest"};
 	   
 	   public static String getClaimStatus(String status)
 	   {
@@ -159,7 +161,7 @@ public class AppConfig
 		   case "TN":
 			   return "Tennessee";
 		   case "TX":
-			   return "Texas";
+			   return "San Antonio";
 		   case "UT":
 			   return "Utah";
 		   case "VT":

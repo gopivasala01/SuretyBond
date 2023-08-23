@@ -129,6 +129,22 @@ public class PropertyWare
 	
 	public static boolean selectBuilding()
 	{
+		//Modify Building Name
+		try
+		{
+			String lastWordFromBuildingName = RunnerClass.buildingName.split(" ")[RunnerClass.buildingName.split(" ").length-1];
+			for(int i=0;i<AppConfig.buildingNameLastWords.length;i++)
+			{
+				if(AppConfig.buildingNameLastWords[i].equalsIgnoreCase(lastWordFromBuildingName.trim()))
+				{
+					RunnerClass.buildingName = RunnerClass.buildingName.replace(lastWordFromBuildingName, "").trim();
+					break;
+				}
+			}
+		}
+		catch(Exception e)
+		{}
+		
 		RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(10));
 		RunnerClass.driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		//Thread.sleep(3000);
