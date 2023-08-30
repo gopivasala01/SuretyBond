@@ -20,6 +20,7 @@ public class RunnerClass
 	
     public static String ID;
 	public static String company;
+	public static String leaseEntityID;
 	public static String stateCode;
 	public static String buildingName;
 	public static String renterFirstName;
@@ -39,6 +40,8 @@ public class RunnerClass
 	public static String claimStatus;
 	
 	public static String[][] completedLeasesList;
+	public static String[][] leaseEntityIDAndCompanyFromLeaseFact;
+	public static boolean navigateToLeaseThroughLeaseEntityID = false;
 	
 	
 	public static void main(String args[]) throws Exception
@@ -55,6 +58,8 @@ public class RunnerClass
 		for(int i=0;i<pendingLeases.length;i++)
 		{
 			ID = pendingLeases[i][0];
+			company = "";
+			leaseEntityID = "";
 		stateCode= pendingLeases[i][1];
 		buildingName = pendingLeases[i][2];
 		renterFirstName =pendingLeases[i][3];
@@ -73,10 +78,15 @@ public class RunnerClass
 		claimNumberAggregated=pendingLeases[i][15];
 		claimStatus=pendingLeases[i][16];
 		
+		navigateToLeaseThroughLeaseEntityID = false;
+		
 		RunnerClass.failedReason="";
 		//get Company from StateCode
 		RunnerClass.company = AppConfig.getCompanyFromStateCode();
 		
+		System.out.println("Record  =  "  +i);
+		System.out.println("Building  =  "+buildingName);
+		System.out.println("Renter Last Name  =  "+renterLastName);
 		
 		try
 		{
@@ -86,11 +96,14 @@ public class RunnerClass
 		DataBase.updateTable(query);
 		continue;
 		}
+		if(navigateToLeaseThroughLeaseEntityID == false)
+		{
 		if(PropertyWare.selectLease()==false)
 		{
 			String query = "Update Automation.SuretyBond Set Automation_Status ='Failed', Automation_Notes='"+failedReason+"' where ID = '"+ID+"'";
 			DataBase.updateTable(query);
 			continue;
+		}
 		}
 		if(UpdateSuretyBondDetails.updateDetails()==false)
 		{

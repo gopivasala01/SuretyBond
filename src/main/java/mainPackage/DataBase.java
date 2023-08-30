@@ -265,6 +265,70 @@ public class DataBase
 		 return false;
 		}
 	}
+	public static void getLeaseEntityIDAndCompany(String firstWordFromBuilding)
+	{
+	try
+	{
+	        Connection con = null;
+	        Statement stmt = null;
+	        ResultSet rs = null;
+	            //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+	            con = DriverManager.getConnection(AppConfig.connectionUrl);
+	            String SQL = "Select top 1 Company,LeaseEntityID from LeaseFact_Dashboard where BuildingAddress like '%"+firstWordFromBuilding+"%' and leasename like '%"+RunnerClass.renterLastName+"%'";
+	            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	           // stmt = con.createStatement();
+	            rs = stmt.executeQuery(SQL);
+	            int rows =0;
+	            if (rs.last()) 
+	            {
+	            	rows = rs.getRow();
+	            	// Move to beginning
+	            	rs.beforeFirst();
+	            }
+	            System.out.println("No of Rows = "+rows);
+	            RunnerClass.leaseEntityIDAndCompanyFromLeaseFact = new String[rows][2];
+	           int  i=0;
+	            while(rs.next())
+	            {
+	            	String 	company =  rs.getObject(1).toString();
+	            	String 	leaseEntityID = rs.getObject(2).toString();
+	            	//ID
+	                try 
+	                {
+	                	if(company==null)
+	                		RunnerClass.leaseEntityIDAndCompanyFromLeaseFact[i][0] = ""; 
+	                	else 
+	                	{
+	    				RunnerClass.leaseEntityIDAndCompanyFromLeaseFact[i][0] = company;
+	    				RunnerClass.company=RunnerClass.leaseEntityIDAndCompanyFromLeaseFact[i][0];
+	                	}
+	                }
+	                catch(Exception e)
+	                {
+	                	RunnerClass.leaseEntityIDAndCompanyFromLeaseFact[i][0] = "";
+	                }
+	              //stateCode
+	                try 
+	                {
+	                	if(leaseEntityID==null)
+	                		RunnerClass.leaseEntityIDAndCompanyFromLeaseFact[i][1] = "";
+	                	else
+	                	{
+	    				RunnerClass.leaseEntityIDAndCompanyFromLeaseFact[i][1] = leaseEntityID;
+	    				RunnerClass.leaseEntityID = RunnerClass.leaseEntityIDAndCompanyFromLeaseFact[i][1];
+	                	}
+	                }
+	                catch(Exception e)
+	                {
+	                	RunnerClass.leaseEntityIDAndCompanyFromLeaseFact[i][1] = "";
+	                }
+	            }
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+}
 	public static void updateTable(String query)
 	 {
 		    try (Connection conn = DriverManager.getConnection(AppConfig.connectionUrl);

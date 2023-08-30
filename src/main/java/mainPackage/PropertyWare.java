@@ -40,6 +40,7 @@ public class PropertyWare
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -144,7 +145,18 @@ public class PropertyWare
 		}
 		catch(Exception e)
 		{}
+		String firstWordFromBuildingName = "";
+		try
+		{
+			firstWordFromBuildingName = RunnerClass.buildingName.split(" ")[0];
+		}
+		catch(Exception e)
+		{}
 		
+		//Get LeaseEntityID and Company from LeaseFact_Dashboard using partial buildingname and Renter Last Name
+		DataBase.getLeaseEntityIDAndCompany(firstWordFromBuildingName);
+		if(RunnerClass.company==null||RunnerClass.company==""||RunnerClass.leaseEntityID==null||RunnerClass.leaseEntityID=="")
+		{
 		RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(10));
 		RunnerClass.driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		//Thread.sleep(3000);
@@ -212,6 +224,13 @@ public class PropertyWare
 			         RunnerClass.failedReason = RunnerClass.failedReason+","+  "Issue in selecting Building";
 				     return false;
 				     }
+		}
+		else
+		{
+			if(PropertyWare.getToLeasePageWithLeaseEntityID()==false)
+				return false;
+			else return true;
+		}
 		return true;
 	}
 	public static boolean selectLease()
@@ -363,5 +382,46 @@ public class PropertyWare
 		return false;
 	}
 
+	public static boolean getToLeasePageWithLeaseEntityID()
+	{
+		
+		try
+		{
+			RunnerClass.navigateToLeaseThroughLeaseEntityID = true;
+			RunnerClass.driver.manage().timeouts().implicitlyWait(100,TimeUnit.SECONDS);
+	        RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(100));
+	        RunnerClass.driver.navigate().refresh();
+	        PropertyWare.intermittentPopUp();
+	        //if(PropertyWare.checkIfBuildingIsDeactivated()==true)
+	        	//return false;
+	        //if(RunnerClass.previousRecordCompany==null||!RunnerClass.previousRecordCompany.equals(RunnerClass.company)||RunnerClass.previousRecordCompany.equals(""))
+	       //{
+	        RunnerClass.driver.findElement(Locators.marketDropdown).click();
+	        String marketName = "HomeRiver Group - "+RunnerClass.company.trim();
+	        Select marketDropdownList = new Select(RunnerClass.driver.findElement(Locators.marketDropdown));
+	        marketDropdownList.selectByVisibleText(marketName);
+	        Thread.sleep(3000);
+	        //}
+	        String buildingPageURL = AppConfig.buildingPageURL+RunnerClass.leaseEntityID;
+	        RunnerClass.driver.navigate().to(buildingPageURL);
+	        if(PropertyWare.permissionDeniedPage()==true)
+	        {
+	        	System.out.println("Wrong Lease Entity ID");
+	        	RunnerClass.failedReason = "Wrong Lease Entity ID";
+	        	return false;
+	        }
+	        PropertyWare.intermittentPopUp();
+	        if(PropertyWare.checkIfBuildingIsDeactivated()==true)
+	        	return false;
+	        boolean portfolioCheck = false;
+	        
+	        return true;
+		}
+		catch(Exception e)
+		{
+			RunnerClass.failedReason= "Lease not found";
+			return false;
+		}
+	}
 
 }

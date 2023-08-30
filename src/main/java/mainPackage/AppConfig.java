@@ -23,6 +23,8 @@ public class AppConfig
 	   
 	   public static String[] LeaseAgreementFileNames = {"REVISED_Lease_","Lease_","Leases_"};
 	   
+	   public static String queryToGetLeaseEntityIDAndCompany = "Select top 1 Company,LeaseEntityID from LeaseFact_Dashboard where BuildingAddress like '%7912 Arlington%' and leasename like '%Snow%'";
+	   
 	   public static String connectionUrl = "jdbc:sqlserver://azrsrv001.database.windows.net;databaseName=HomeRiverDB;user=service_sql02;password=xzqcoK7T;encrypt=true;trustServerCertificate=true;";
 	   
 	  // public static String leaseFetchQuery  = "Select Company, Building,leaseName from Automation.InitialRentsUpdate where Status ='Pending' and Company ='Georgia'";
