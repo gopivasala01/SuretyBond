@@ -257,13 +257,13 @@ public class PropertyWare
 					renterFullNameArray[0] = RunnerClass.renterFullName;
 				}
 				boolean renterAvailability = false;
-				for(int i=0;i<ownerNames.size();i++)
+				for(int i=0;i<leaseNameList.size();i++)
 				{
-					String renterName = ownerNames.get(i).getText();
+					String renterName = leaseNameList.get(i).getText();
 					for(int j=0;j<renterFullNameArray.length;j++)
 					{
 						String renterPartialName = renterFullNameArray[j];
-						if(renterName.toLowerCase().contains(renterPartialName.toLowerCase()))
+						if(renterName.toLowerCase().contains(RunnerClass.renterLastName.toLowerCase()))
 						{
 							renterAvailability = true;
 							leaseNameList.get(i).click();

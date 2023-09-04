@@ -29,11 +29,11 @@ public class AppConfig
 	   
 	  // public static String leaseFetchQuery  = "Select Company, Building,leaseName from Automation.InitialRentsUpdate where Status ='Pending' and Company ='Georgia'";
 	   
-	   public static String pendingLeasesQuery = "Select top 2434 ID, AddressState,BuildingName,RenterFirstName,RenterLastName,PolicyNumberAggregated\r\n"
-	   		+ ",RenterFullName = (RenterFirstName +' '+ RenterLastName),PolicyStatus,CoverageAmount,CoverageEndDate\r\n"
-	   		+ ",SubmittedTimeStamp,TotalSubmittedAmount,TotalPayoutAmount,ClaimPaidAt='',ClaimDueDate,ClaimNumberAggregated,ClaimStatus\r\n"
-	   		+ "from Automation.SuretyBond where Automation_Status ='pending' order by id desc";
-	   
+	   public static String pendingLeasesQuery =  "Select top 2137 ID, AddressState,BuildingName,RenterFirstName,RenterLastName,PolicyNumberAggregated\r\n"
+				   		+ ",RenterFullName = (RenterFirstName +' '+ RenterLastName),PolicyStatus,CoverageAmount,CoverageEndDate\r\n"
+				   		+ ",SubmittedTimeStamp,TotalSubmittedAmount,TotalPayoutAmount,ClaimPaidAt='', Format( Convert(Date, claimDueDate),'MM/dd/yyyy'),ClaimNumberAggregated,ClaimStatus\r\n"
+				   		+ "from Automation.SuretyBond where Automation_Status ='Failed' AND Automation_Notes = 'Lease Not Found'\r\n"
+				   		+ "  order by id desc ";
 	   public static String failedLeasesQuery = "Select Company, LeaseEntityID,DateDiff(Day,MoveInDate,Getdate()) as datedifference from Automation.BaseRentUpdate where  Company='Alabama' and Status ='Failed'";
 	   
 	   public static String getLeasesWithStatusforCurrentDay = "Select Company, Building,ThirdPartyUnitID, Leaseidnumber, LeaseName,LeaseStatus,leaseExecutionDate, StartDate, EndDate, MonthlyRent, MonthlyRentFromPW, PetRent, PetRentFromPW,Status, Notes from Automation.InitialRentsUpdate and company in ('Tennessee') ";//where Format(convert(datetime, CompletedDate, 101),'dd MM yyyy') = format(getdate(),'dd MM yyyy') ";//and company in ('Florida','North Carolina')";

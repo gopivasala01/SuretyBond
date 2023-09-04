@@ -87,7 +87,7 @@ public class RunnerClass
 		RunnerClass.failedReason="";
 		//get Company from StateCode
 		RunnerClass.company = AppConfig.getCompanyFromStateCode();
-		RunnerClass.claimDueDate = dateFormatter();
+		//RunnerClass.claimDueDate = dateFormatter();
 		/*
 		 * datesplit = claimDueDate.split(" ")[0];
 		 * 
@@ -136,21 +136,6 @@ public class RunnerClass
 			continue;
 		}
 		}
-	}
-	
-	public static String dateFormatter() {
-		datesplit = claimDueDate.split(" ")[0];
-		System.out.println(datesplit);
-		SimpleDateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat DateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
-		Date date = null;
-		try {
-			date = inputDate.parse(claimDueDate.trim());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return (DateFormat.format(date)).toString();
 	}
 
 }
