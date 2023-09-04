@@ -1,6 +1,9 @@
 package mainPackage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -38,6 +41,7 @@ public class RunnerClass
 	public static String claimDueDate;
 	public static String claimNumberAggregated;
 	public static String claimStatus;
+	public static String datesplit;
 	
 	public static String[][] completedLeasesList;
 	public static String[][] leaseEntityIDAndCompanyFromLeaseFact;
@@ -83,6 +87,18 @@ public class RunnerClass
 		RunnerClass.failedReason="";
 		//get Company from StateCode
 		RunnerClass.company = AppConfig.getCompanyFromStateCode();
+		RunnerClass.claimDueDate = dateFormatter();
+		/*
+		 * datesplit = claimDueDate.split(" ")[0];
+		 * 
+		 * System.out.println(datesplit);
+		 */
+		/*
+		 * SimpleDateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		 * SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy"); Date
+		 * date = inputDate.parse(claimDueDate.trim());
+		 * System.out.println(dateFormatter.format(date));
+		 */
 		
 		System.out.println("Record  =  "  +i);
 		System.out.println("Building  =  "+buildingName);
@@ -120,6 +136,21 @@ public class RunnerClass
 			continue;
 		}
 		}
+	}
+	
+	public static String dateFormatter() {
+		datesplit = claimDueDate.split(" ")[0];
+		System.out.println(datesplit);
+		SimpleDateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat DateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+		Date date = null;
+		try {
+			date = inputDate.parse(claimDueDate.trim());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (DateFormat.format(date)).toString();
 	}
 
 }
