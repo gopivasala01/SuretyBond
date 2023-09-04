@@ -30,9 +30,10 @@ public class AppConfig
 	  // public static String leaseFetchQuery  = "Select Company, Building,leaseName from Automation.InitialRentsUpdate where Status ='Pending' and Company ='Georgia'";
 	   
 	   public static String pendingLeasesQuery = "Select top 2000 ID, AddressState,BuildingName,RenterFirstName,RenterLastName,PolicyNumberAggregated\r\n"
-	   		+ ",RenterFullName = (RenterFirstName +' '+ RenterLastName),PolicyStatus,CoverageAmount,CoverageEndDate\r\n"
-	   		+ ",SubmittedTimeStamp,TotalSubmittedAmount,TotalPayoutAmount,ClaimPaidAt='',ClaimDueDate,ClaimNumberAggregated,ClaimStatus\r\n"
-	   		+ "from Automation.SuretyBond where Automation_Status ='pending' order by id ";
+		   		+ ",RenterFullName = (RenterFirstName +' '+ RenterLastName),PolicyStatus,CoverageAmount,CoverageEndDate\r\n"
+		   		+ ",SubmittedTimeStamp,TotalSubmittedAmount,TotalPayoutAmount,ClaimPaidAt='', Format( Convert(Date, claimDueDate),'MM/dd/yyyy'),ClaimNumberAggregated,ClaimStatus\r\n"
+		   		+ "from Automation.SuretyBond where Automation_Status ='Failed' AND Automation_Notes = 'Lease Not Found'\r\n"
+		   		+ " ";
 	   
 	   public static String failedLeasesQuery = "Select Company, LeaseEntityID,DateDiff(Day,MoveInDate,Getdate()) as datedifference from Automation.BaseRentUpdate where  Company='Alabama' and Status ='Failed'";
 	   
