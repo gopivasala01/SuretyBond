@@ -32,7 +32,7 @@ public class AppConfig
 	   public static String pendingLeasesQuery = "Select top 2434 ID, AddressState,BuildingName,RenterFirstName,RenterLastName,PolicyNumberAggregated\r\n"
 	   		+ ",RenterFullName = (RenterFirstName +' '+ RenterLastName),PolicyStatus,CoverageAmount,CoverageEndDate\r\n"
 	   		+ ",SubmittedTimeStamp,TotalSubmittedAmount,TotalPayoutAmount,ClaimPaidAt='',ClaimDueDate,ClaimNumberAggregated,ClaimStatus\r\n"
-	   		+ "from Automation.SuretyBond where Automation_Status ='pending' order by id ";
+	   		+ "from Automation.SuretyBond where Automation_Status ='pending' order by id desc";
 	   
 	   public static String failedLeasesQuery = "Select Company, LeaseEntityID,DateDiff(Day,MoveInDate,Getdate()) as datedifference from Automation.BaseRentUpdate where  Company='Alabama' and Status ='Failed'";
 	   
