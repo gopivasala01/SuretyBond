@@ -108,7 +108,7 @@ public class RunnerClass
 		{
 		if(PropertyWare.selectBuilding()==false)
 		{
-		String query = "Update Automation.SuretyBond Set Automation_Status ='Failed', Automation_Notes='"+failedReason+"' where ID = '"+ID+"'";
+		String query = "Update Automation.SuretyBond Set Automation_Status ='Failed', Automation_Notes='"+failedReason+"' ,Automation_CompletionDate=getdate() where ID = '"+ID+"'";
 		DataBase.updateTable(query);
 		continue;
 		}
@@ -116,18 +116,18 @@ public class RunnerClass
 		{
 		if(PropertyWare.selectLease()==false)
 		{
-			String query = "Update Automation.SuretyBond Set Automation_Status ='Failed', Automation_Notes='"+failedReason+"' where ID = '"+ID+"'";
+			String query = "Update Automation.SuretyBond Set Automation_Status ='Failed', Automation_Notes='"+failedReason+"' ,Automation_CompletionDate=getdate() where ID = '"+ID+"'";
 			DataBase.updateTable(query);
 			continue;
 		}
 		}
 		if(UpdateSuretyBondDetails.updateDetails()==false)
 		{
-			String query = "Update Automation.SuretyBond Set Automation_Status ='Failed', Automation_Notes='"+failedReason+"' where ID = '"+ID+"'";
+			String query = "Update Automation.SuretyBond Set Automation_Status ='Failed', Automation_Notes='"+failedReason+"' ,Automation_CompletionDate=getdate() where ID = '"+ID+"'";
 			DataBase.updateTable(query);
 			continue;
 		}
-		String query = "Update Automation.SuretyBond Set Automation_Status ='Completed', Automation_Notes='"+failedReason+"' where ID = '"+ID+"'";
+		String query = "Update Automation.SuretyBond Set Automation_Status ='Completed', Automation_Notes='"+failedReason+"' ,Automation_CompletionDate=getdate() where ID = '"+ID+"'";
 		DataBase.updateTable(query);
 		
 		}
