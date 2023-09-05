@@ -193,6 +193,27 @@ public class PropertyWare
 						for(int i =0;i<displayedCompanies.size();i++)
 						{
 							String companyName = displayedCompanies.get(i).getText();
+							if(RunnerClass.company.contains(","))
+							{
+								if(RunnerClass.company.toLowerCase().contains(companyName.split("-")[1].trim().toLowerCase())&&!companyName.contains("Legacy"))
+								{
+									
+									List<WebElement> leaseList = RunnerClass.driver.findElements(By.xpath("(//*[@class='section'])["+(i+1)+"]/ul/li/a"));
+									//System.out.println(leaseList.size());
+									for(int j=0;j<leaseList.size();j++)
+									{
+										String lease = leaseList.get(j).getText();
+										if(lease.toLowerCase().contains(RunnerClass.buildingName.toLowerCase())&&lease.contains(":"))
+										{
+											RunnerClass.driver.findElement(By.xpath("(//*[@class='section'])["+(i+1)+"]/ul/li["+(j+1)+"]/a")).click();
+											leaseSelected = true;
+											break;
+										}
+									}
+								}
+							}
+							else
+							{
 							if(companyName.toLowerCase().contains(RunnerClass.company.toLowerCase())&&!companyName.contains("Legacy"))
 							{
 								
@@ -208,6 +229,7 @@ public class PropertyWare
 										break;
 									}
 								}
+							}
 							}
 							if(leaseSelected==true)
 							{
@@ -243,6 +265,35 @@ public class PropertyWare
 			RunnerClass.driver.findElement(Locators.leasesTab).click();
 			RunnerClass.driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 	        RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(5));
+	        
+	        try
+	        {
+	        	List<WebElement> leaseNameList = RunnerClass.driver.findElements(Locators.leaseList);
+	        	boolean renterAvailability = false;
+	        	for(int i=0;i<leaseNameList.size();i++)
+				{
+					String renterName = leaseNameList.get(i).getText();
+					if(renterName.toLowerCase().contains(RunnerClass.renterLastName.trim().toLowerCase()))
+					{
+						leaseNameList.get(i).click();
+						renterAvailability =true;
+						break;
+					}
+				}
+	        	if(renterAvailability==false)
+	        	{
+	        		System.out.println( "Lease Not Available");
+				    RunnerClass.failedReason =  RunnerClass.failedReason+","+   "Lease Not Available";
+					return false;
+	        	}
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("Unable to Click Lease Owner Name");
+			    RunnerClass.failedReason =  RunnerClass.failedReason+","+  "Unable to Click Lease Onwer Name";
+				return false;
+	        }
+	        /*
 			try
 			{
 				String[] renterFullNameArray = {};
@@ -262,7 +313,7 @@ public class PropertyWare
 					String renterName = leaseNameList.get(i).getText();
 					for(int j=0;j<renterFullNameArray.length;j++)
 					{
-						String renterPartialName = renterFullNameArray[j];
+						//String renterPartialName = renterFullNameArray[j];
 						if(renterName.toLowerCase().contains(RunnerClass.renterLastName.toLowerCase()))
 						{
 							renterAvailability = true;
@@ -287,6 +338,7 @@ public class PropertyWare
 			    RunnerClass.failedReason =  RunnerClass.failedReason+","+  "Unable to Click Lease Onwer Name";
 				return false;
 			}
+			*/
 			PropertyWare.intermittentPopUp();
 			return true;
 		}
