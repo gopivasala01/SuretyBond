@@ -32,14 +32,14 @@ public class AppConfig
 	   public static String pendingLeasesQuery = "Select ID, AddressState,BuildingName,RenterFirstName,RenterLastName,PolicyNumberAggregated\r\n"
 		   		+ ",RenterFullName = (RenterFirstName +' '+ RenterLastName),PolicyStatus,CoverageAmount,CoverageEndDate\r\n"
 		   		+ ",SubmittedTimeStamp,TotalSubmittedAmount,TotalPayoutAmount,ClaimPaidAt='', Format( Convert(Date, claimDueDate),'MM/dd/yyyy'),ClaimNumberAggregated,ClaimStatus\r\n"
-		   		+ "from Automation.SuretyBond where Automation_Status ='Failed'\r\n"
+		   		+ "from Automation.SuretyBond where Automation_Status ='Failed' and Automation_Notes = 'Lease Not Found'"
 		   		+ " ";
 	   
 	   public static String failedLeasesQuery = "Select Company, LeaseEntityID,DateDiff(Day,MoveInDate,Getdate()) as datedifference from Automation.BaseRentUpdate where  Company='Alabama' and Status ='Failed'";
 	   
 	   public static String getLeasesWithStatusforCurrentDay = "Select Company, Building,ThirdPartyUnitID, Leaseidnumber, LeaseName,LeaseStatus,leaseExecutionDate, StartDate, EndDate, MonthlyRent, MonthlyRentFromPW, PetRent, PetRentFromPW,Status, Notes from Automation.InitialRentsUpdate and company in ('Tennessee') ";//where Format(convert(datetime, CompletedDate, 101),'dd MM yyyy') = format(getdate(),'dd MM yyyy') ";//and company in ('Florida','North Carolina')";
 	   
-	   public static String[] buildingNameLastWords = {"Court","Lane","Road","Drive","Avenue","Terrace","Northwest","Bend","Street","Circle" };
+	   public static String[] buildingNameLastWords = {"Court","Lane","Road","Drive","Avenue","Terrace","Northwest","Southwest","Bend","Street","Circle","Trail" };
 	   
 	   public static String getClaimStatus(String status)
 	   {

@@ -34,7 +34,7 @@ public class PropertyWare
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
         options.addArguments("--remote-allow-origins=*");
-		WebDriverManager.chromedriver().setup();
+		WebDriverManager.chromedriver().clearDriverCache().setup();
         RunnerClass.driver= new ChromeDriver(options);
         RunnerClass.driver.manage().window().maximize();
 		return true;
@@ -450,6 +450,11 @@ public class PropertyWare
 	        //if(RunnerClass.previousRecordCompany==null||!RunnerClass.previousRecordCompany.equals(RunnerClass.company)||RunnerClass.previousRecordCompany.equals(""))
 	       //{
 	        RunnerClass.driver.findElement(Locators.marketDropdown).click();
+	        if(RunnerClass.company.contains("Institutional Accounts")) {
+	        	
+	        	RunnerClass.failedReason = "Institutional Accounts";
+	        	return false;
+	        }
 	        String marketName = "HomeRiver Group - "+RunnerClass.company.trim();
 	        Select marketDropdownList = new Select(RunnerClass.driver.findElement(Locators.marketDropdown));
 	        marketDropdownList.selectByVisibleText(marketName);
@@ -472,7 +477,7 @@ public class PropertyWare
 		}
 		catch(Exception e)
 		{
-			RunnerClass.failedReason= "Lease not found";
+			RunnerClass.failedReason= "Unable to find Lease";
 			return false;
 		}
 	}
