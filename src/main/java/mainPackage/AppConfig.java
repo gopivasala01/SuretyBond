@@ -30,16 +30,18 @@ public class AppConfig
 	  // public static String leaseFetchQuery  = "Select Company, Building,leaseName from Automation.InitialRentsUpdate where Status ='Pending' and Company ='Georgia'";
 	   
 	   public static String pendingLeasesQuery = "Select ID, AddressState,BuildingName,RenterFirstName,RenterLastName,PolicyNumberAggregated\r\n"
+
 	   		+ ",RenterFullName = (RenterFirstName +' '+ RenterLastName),PolicyStatus,CoverageAmount,CoverageEndDate\r\n"
 	   		+ ",SubmittedTimeStamp,TotalSubmittedAmount,TotalPayoutAmount,ClaimPaidAt='', Format( Convert(Date, claimDueDate),'MM/dd/yyyy'),ClaimNumberAggregated,ClaimStatus\r\n"
-	   		+ "from Automation.SuretyBond where Automation_Status ='Failed' AND Automation_Notes = 'Lease Not Found'\r\n"
+	   		+ "from Automation.SuretyBond where Automation_Status ='Failed'\r\n"
 	   		+ " ";
+
 	   
 	   public static String failedLeasesQuery = "Select Company, LeaseEntityID,DateDiff(Day,MoveInDate,Getdate()) as datedifference from Automation.BaseRentUpdate where  Company='Alabama' and Status ='Failed'";
 	   
 	   public static String getLeasesWithStatusforCurrentDay = "Select Company, Building,ThirdPartyUnitID, Leaseidnumber, LeaseName,LeaseStatus,leaseExecutionDate, StartDate, EndDate, MonthlyRent, MonthlyRentFromPW, PetRent, PetRentFromPW,Status, Notes from Automation.InitialRentsUpdate and company in ('Tennessee') ";//where Format(convert(datetime, CompletedDate, 101),'dd MM yyyy') = format(getdate(),'dd MM yyyy') ";//and company in ('Florida','North Carolina')";
 	   
-	   public static String[] buildingNameLastWords = {"Court","Lane","Road","Drive","Avenue","Terrace","Northwest"};
+	   public static String[] buildingNameLastWords = {"Court","Lane","Road","Drive","Avenue","Terrace","Northwest","Southwest","Bend","Street","Circle","Trail" };
 	   
 	   public static String getClaimStatus(String status)
 	   {
@@ -82,7 +84,7 @@ public class AppConfig
 		   case "AZ":
 		       return "Arizona";
 		   case "AR":
-			   return "Arkansas";
+			   return "Arkansas,Little Rock";
 		   case "CA":
 		       return "California";
 		   case "CO":
@@ -126,7 +128,7 @@ public class AppConfig
 		   case "MS":
 			   return "Mississippi";
 		   case "MO":
-			   return "Missouri";
+			   return "Kansas City";
 		   case "MT":
 			   return "Montana";
 		   case "NE":
@@ -148,7 +150,7 @@ public class AppConfig
 		   case "OH":
 			   return "Ohio";
 		   case "OK":
-			   return "Oklahoma";
+			   return "OKC,Tulsa";
 		   case "OR":
 			   return "Oregon";
 		   case "PA":
@@ -164,7 +166,7 @@ public class AppConfig
 		   case "TN":
 			   return "Tennessee";
 		   case "TX":
-			   return "San Antonio";
+			   return "San Antonio,Houston,Dallas/Fort Worth,Austin";
 		   case "UT":
 			   return "Utah";
 		   case "VT":
