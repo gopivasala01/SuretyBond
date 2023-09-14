@@ -244,7 +244,7 @@ public class PropertyWare
 			         } 
 		    catch(Exception e) 
 				     {
-			         RunnerClass.failedReason = RunnerClass.failedReason+","+  "Issue in selecting Building";
+			         RunnerClass.failedReason = RunnerClass.failedReason+","+  "Building Not Found";
 				     return false;
 				     }
 		}
@@ -465,7 +465,7 @@ public class PropertyWare
 	        if(PropertyWare.permissionDeniedPage()==true)
 	        {
 	        	System.out.println("Wrong Lease Entity ID");
-	        	RunnerClass.failedReason = "Wrong Lease Entity ID";
+	        	RunnerClass.failedReason = "Lease Not Available";
 	        	return false;
 	        }
 	        PropertyWare.intermittentPopUp();
@@ -477,7 +477,7 @@ public class PropertyWare
 		}
 		catch(Exception e)
 		{
-			RunnerClass.failedReason= "Unable to find Lease";
+			RunnerClass.failedReason= "Lease Not Available";
 			return false;
 		}
 	}
